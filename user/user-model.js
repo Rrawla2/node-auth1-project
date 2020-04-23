@@ -12,14 +12,14 @@ function find() {
         .select("id", "username")
 }
 
-function add(user) {
+function findBy(user) {
     return db("users")
-        .insert(user)
+        .where(user)
 }
 
-function findBy(filter) {
-    return db("users")
-        .where(filter)
+async function add(user) {
+    const [id] = await db("users").insert(user, "id")
+    return findById(id)
 }
 
 function findById(id) {

@@ -19,7 +19,7 @@ router.post("/register", (req, res) => {
     const hash = bcrypt.hashSync(user.password, 8)
 
     user.password = hash
-
+    console.log(user)
     Users.add(user)
         .then(user => {
             res.status(201).json({ saved })
@@ -31,9 +31,9 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
     const { username, password } = req.body
-
+    
     Users.findBy({ username })
-        .then(([ user ]) => {
+        .then(([user]) => {
             if(user && bcrypt.compareSync(password, user.password)) {
                 req.session.user = username
                 res.status(200).json({ message: `Welcome ${username}`})
@@ -51,7 +51,7 @@ router.get("/logout", (req, res) => {
         if(err) {
             res.send("Unable to logout")
         } else {
-            res.send("You are not logged out")
+            res.send("You are now logged out")
         }
     })
 })
