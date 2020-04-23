@@ -1,8 +1,10 @@
 const db = require("../data/db-config.js")
 
 module.exports = {
+    add,
     find,
-    add
+    findBy,
+    findById
 }
 
 function find() {
@@ -13,4 +15,15 @@ function find() {
 function add(user) {
     return db("users")
         .insert(user)
+}
+
+function findBy(filter) {
+    return db("users")
+        .where(filter)
+}
+
+function findById(id) {
+    return db("users")
+        .where({ id })
+        .first()
 }
